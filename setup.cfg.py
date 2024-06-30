@@ -1,0 +1,27 @@
+[metadata]
+name = pregress
+version = 0.9.0
+author = Daniel McGibney
+author_email = dmcgibney@bus.miami.edu
+description = Python Regression Analysis.
+long_description = file: README.md
+long_description_content_type = text/markdown
+url = https://github.com/damcgib/PRegress
+classifiers =
+    Programming Language :: Python :: 3
+    License :: OSI Approved :: MIT License
+    Operating System :: OS Independent
+
+[options]
+packages = find:
+python_requires = >=3.6
+install_requires =
+    matplotlib
+    pandas
+    numpy
+    statsmodels
+    seaborn
+
+[options.entry_points]
+console_scripts =
+    # Define any command-line scripts here, if applicable

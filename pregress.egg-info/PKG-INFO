@@ -1,3 +1,17 @@
+Metadata-Version: 2.1
+Name: pregress
+Version: 0.9.0
+Summary: Python Regression Analysis.
+Home-page: https://github.com/damcgib/PRegress
+Author: Daniel McGibney
+Author-email: dmcgibney@bus.miami.edu
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
 # PRegress
 
 PRegress is a Python package for regression analysis and data visualization. It provides tools for model fitting, prediction, and various types of plots to help visualize your data and regression results.
