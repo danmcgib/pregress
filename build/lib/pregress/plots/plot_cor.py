@@ -2,32 +2,54 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+from pregress.modeling.parse_formula import parse_formula
 
-def plot_cor(df, main='Correlation Matrix', subplot=None):
+def plot_cor(formula, data=None, main='Correlation Matrix', subplot=None, **kwargs):
     """
-    Generates a heatmap for the correlation matrix of a DataFrame.
+    Generates a heatmap for the correlation matrix of a dataframe.
 
     Args:
-        df (pandas.DataFrame): The DataFrame for which to compute the correlation matrix.
+        formula (str or pandas.DataFrame): The formula or dataframe for which to compute the correlation matrix.
+        data (pandas.DataFrame, optional): The dataframe for formula evaluation if a formula is provided.
         main (str, optional): Main title of the plot.
-        xlab (str, optional): Label for the x-axis.
-        ylab (str, optional): Label for the y-axis.
+        subplot (optional): Subplot for embedding the heatmap.
+        kwargs: Additional keyword arguments for sns.heatmap() (e.g., annot, cmap, square, vmax, vmin, linewidths, etc.)
 
     Returns:
         None. Displays the heatmap.
     """
+    
+    if isinstance(formula, pd.DataFrame):
+        data = formula
+        formula = None
+
+    if formula is not None:
+        formula = formula + "+0"
+        Y_name, X_names, Y_out, X_out = parse_formula(formula, data)
+        # Combine Y and X data for the correlation matrix
+        data = pd.concat([pd.Series(Y_out, name=Y_name), X_out], axis=1)
+
     # Calculate the correlation matrix
-    corr_matrix = df.corr()
+    corr_matrix = data.corr()
 
     # Set the diagonal elements to NaN to make them white
     np.fill_diagonal(corr_matrix.values, np.nan)
 
-    # Create a custom colormap with black for NaN values
-    cmap = sns.color_palette("coolwarm", as_cmap=True)
-    cmap.set_bad(color='black')
+    # Set default values if not already provided in kwargs
+    kwargs.setdefault('annot', True)
+    kwargs.setdefault('square', True)
+    kwargs.setdefault('vmax', 1)
+    kwargs.setdefault('vmin', -1)
+    kwargs.setdefault('linewidths', 0.5)
 
-    # Draw the heatmap
-    sns.heatmap(corr_matrix, annot=True, cmap=cmap, vmax=1, vmin=-1, square=True, linewidths=.5)
+    # If cmap is not provided in kwargs, set a default cmap with NaN handling
+    if 'cmap' not in kwargs:
+        cmap = sns.color_palette("coolwarm", as_cmap=True)
+        cmap.set_bad(color='black')  # Make NaN values appear in black
+        kwargs['cmap'] = cmap
+
+    # Draw the heatmap, passing in all kwargs dynamically
+    sns.heatmap(corr_matrix, **kwargs)
 
     # Add main title
     plt.title(main, fontsize=18)

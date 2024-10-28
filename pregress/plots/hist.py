@@ -3,8 +3,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy.stats import norm as normal_dist
+import inspect
 
-def hist(vector, bins=30, color="blue", norm=False, main="Histogram", xlab=None, ylab="Frequency", subplot = None):
+def hist(vector, bins=30, color="blue", norm=False, main="Histogram", xlab=None, ylab="Frequency", subplot=None):
     """
     Generates and prints a histogram for a given vector.
 
@@ -16,6 +17,7 @@ def hist(vector, bins=30, color="blue", norm=False, main="Histogram", xlab=None,
         main (str, optional): Title for the histogram.
         xlab (str, optional): Label for the x-axis.
         ylab (str, optional): Label for the y-axis.
+        subplot (tuple, optional): A tuple specifying the subplot grid (nrows, ncols, index).
 
     Returns:
         None. The function creates and shows the histogram.
@@ -31,9 +33,11 @@ def hist(vector, bins=30, color="blue", norm=False, main="Histogram", xlab=None,
             xlab = [var_name for var_name, var_val in callers_local_vars if var_val is vector]
             xlab = xlab[0] if xlab else 'Variable'
 
-    # Clear any existing plots
-    plt.clf()
-    plt.close()
+    # If a subplot is specified, create a subplot within the grid
+    if subplot:
+        plt.subplot(*subplot)
+    else:
+        plt.figure()
 
     # Create the histogram
     sns.histplot(vector, bins=bins, kde=False, color=color, edgecolor='black')
@@ -51,13 +55,6 @@ def hist(vector, bins=30, color="blue", norm=False, main="Histogram", xlab=None,
     plt.xlabel(xlab)
     plt.ylabel(ylab)
 
-    # Show the plot if subplot is not specified or if it is the last subplot
+    # Only show the plot if it's not part of a subplot
     if subplot is None:
         plt.show()
-        plt.clf()
-        plt.close()
-
-
-
-
-

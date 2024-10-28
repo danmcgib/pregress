@@ -11,7 +11,7 @@ else:
 
 setup(
     name='pregress',
-    version='1.0.2',
+    version='1.0.4',
     packages=find_packages(include=['pregress', 'pregress.*']),
     install_requires=[
         'matplotlib', 'pandas', 'numpy', 'statsmodels', 'seaborn', 'scikit-learn', 

@@ -9,10 +9,10 @@ def boxplot(formula=None, data=None, xcolor="blue", ycolor="red", main="Boxplots
     Generates and prints boxplots for all numeric variables specified in the formula or all numeric variables in the data if no formula is provided.
 
     Args:
-        formula (str, optional): Formula to define the model (dependent ~ independent).
+        formula (str, optional): Formula to define the model (Y ~ X).
         data (DataFrame, optional): Data frame containing the data.
-        xcolor (str, optional): Color of the boxplots for the independent variables.
-        ycolor (str, optional): Color of the boxplots for the dependent variable.
+        xcolor (str, optional): Color of the boxplots for the predictor variables.
+        ycolor (str, optional): Color of the boxplots for the response variable.
         main (str, optional): Title of the plot.
         xlab (str, optional): Label for the x-axis.
         ylab (str, optional): Label for the y-axis.

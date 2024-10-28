@@ -4,19 +4,21 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 
-def plots(formula, data=None, xcolor="blue", ycolor="red", lines=False, linescolor = "black", subplot=None):
+def plots(formula, data=None, xcolor="blue", ycolor="red", lines=False, linescolor="black", main="Scatter Plot Matrix"):
     """
-    Generates and prints a plot of each scatter plot corresponding to all X and Y values.
+    Generates and displays a scatter plot matrix corresponding to all X and Y values.
 
     Args:
         formula (str): Formula to define the model (dependent ~ independent).
         data (DataFrame, optional): Data frame containing the data.
         xcolor (str, optional): Color of the points in the scatter plot among both x variables.
         ycolor (str, optional): Color of the points in the scatter plot including the y variable.
-        lines (bool, optional): Whether or not to include the regression line in each plot.
+        lines (bool, optional): Whether to include the regression line in each plot.
+        linescolor (str, optional): Color of the regression lines.
+        main (str, optional): Main title of the scatter plot matrix.
 
     Returns:
-        None. The function creates and shows a plot.
+        None. The function creates and shows the plot.
     """
     # Clear any existing plots
     plt.clf()
@@ -38,6 +40,9 @@ def plots(formula, data=None, xcolor="blue", ycolor="red", lines=False, linescol
 
         # Create the pairplot
         pair_plot = sns.pairplot(plot_data, diag_kind="kde")
+
+        # Set main title
+        plt.suptitle(main, fontsize=18)
 
         # Customizing scatter plot colors
         for i in range(len(plot_data.columns)):
@@ -72,14 +77,7 @@ def plots(formula, data=None, xcolor="blue", ycolor="red", lines=False, linescol
                                         ax=pair_plot.axes[i, j], scatter_kws={'color': xcolor},
                                         line_kws={'color': linescolor}, ci=None, truncate=False)
 
-        # Show the plot if subplot is not specified
-        if subplot is None:
-            plt.show()
-            plt.clf()
-            plt.close()
-
-
-
-
-
-
+        # Display the plot
+        plt.show()
+        plt.clf()
+        plt.close()
